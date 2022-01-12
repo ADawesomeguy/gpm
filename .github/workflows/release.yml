@@ -21,13 +21,16 @@ jobs:
       run: dotnet build source/gpm.sln --no-restore
       
     - name: Publish
-      run: dotnet publish source/gpm/gpm.csproj -o publish-win && dotnet publish source/gpm/gpm.csproj -r linux-x64 --no-self-contained -o publish-linux
+      run: dotnet publish source/gpm/gpm.csproj -o publish-win && dotnet publish source/gpm/gpm.csproj -r linux-x64 --no-self-contained -o publish-linux && dotnet publish source/gpm/gpm.csproj -r osx-x64 --no-self-contained -o publish-macos-x64
     - uses: montudor/action-zip@v1
       with:
         args: zip -qq -r gpm-win.zip publish-win/ 
     - uses: montudor/action-zip@v1
       with:
         args: zip -qq -r gpm-linux.zip publish-linux/
+    - uses: montudor/action-zip@v1
+      with:
+        args: zip -qq -r gpm-macos-x64.zip publish-macos-x64/
 
     - uses: ncipollo/release-action@v1
       with:
